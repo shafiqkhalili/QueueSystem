@@ -10,10 +10,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -27,7 +24,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_maps)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+            .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -40,14 +37,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-   /* override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
+    /* override fun onMapReady(googleMap: GoogleMap) {
+         map = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }*/
+         // Add a marker in Sydney and move the camera
+         val sydney = LatLng(-34.0, 151.0)
+         map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+         map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+     }*/
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
@@ -57,8 +54,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val homeLatLng = LatLng(latitude, longitude)
         val zoomLevel = 15f
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng,zoomLevel))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, zoomLevel))
+
+        val overlaySize = 100F
+
+        val androidOverlay = GroundOverlayOptions()
+            .image(BitmapDescriptorFactory.fromResource((R.drawable.android)))
+            .position(homeLatLng, overlaySize)
+        map.addGroundOverlay(androidOverlay)
         map.addMarker(MarkerOptions().position(homeLatLng))
+
         setMapLongClick(map)
         setPoiClick(map)
         setMapStyle(map)
@@ -90,8 +95,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         else -> super.onOptionsItemSelected(item)
     }
-    private fun setMapLongClick(map:GoogleMap){
-        map.setOnMapLongClickListener {latLng ->
+
+    private fun setMapLongClick(map: GoogleMap) {
+        map.setOnMapLongClickListener { latLng ->
             // A Snippet is Additional text that's displayed below the title.
             val snippet = String.format(
                 Locale.getDefault(),
@@ -108,8 +114,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             )
         }
     }
-    private fun setPoiClick(map:GoogleMap){
-        map.setOnPoiClickListener{poi ->
+
+    private fun setPoiClick(map: GoogleMap) {
+        map.setOnPoiClickListener { poi ->
             val poiMarker = map.addMarker(
                 MarkerOptions()
                     .position(poi.latLng)
@@ -119,18 +126,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setMapStyle(map: GoogleMap){
+    private fun setMapStyle(map: GoogleMap) {
         try {
             val success = map.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                    this,R.raw.map_style
+                    this, R.raw.map_style
                 )
             )
-            if (!success){
-                Log.e(TAG,"Style parsing failed!")
+            if (!success) {
+                Log.e(TAG, "Style parsing failed!")
             }
-        }catch (e:Resources.NotFoundException){
-            Log.e(TAG,"Can't find style. Error: ",e)
+        } catch (e: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", e)
         }
     }
 }
