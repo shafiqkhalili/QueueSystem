@@ -19,5 +19,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="searchBox">Search textbox</string>
+    <string name="SearchBoxHint">Enter Address, City or Zip Code</string>
+    <string name="barcodeText">Name</string>
+    <string name="qrScanText">or scan the QR code to take nr.</string>
 
 </resources>
