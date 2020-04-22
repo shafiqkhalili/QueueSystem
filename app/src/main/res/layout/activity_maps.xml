@@ -9,8 +9,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MapsActivity" >
-    </androidx.fragment.app.FragmentContainerView>
+        tools:context=".MapsActivity" />
 
     <RelativeLayout
         android:id="@+id/relLayout1"
@@ -21,6 +20,7 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/white_border"
         android:elevation="10dp">
+
         <ImageView
             android:id="@+id/ic_magnify"
             android:layout_width="15dp"
@@ -29,6 +29,7 @@
             android:layout_marginStart="10dp"
             android:contentDescription="@string/searchBox"
             android:src="@drawable/ic_magnify" />
+
         <AutoCompleteTextView
             android:id="@+id/input_search"
             android:layout_width="match_parent"
@@ -39,7 +40,9 @@
             android:hint="@string/SearchBoxHint"
             android:imeOptions="actionSearch"
             android:textColor="#000"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:inputType="textAutoComplete"/>
+
 
     </RelativeLayout>
 
